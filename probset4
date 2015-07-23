@@ -1,5 +1,6 @@
 #!/usr/bin/env/python
 # NE334 ProblemSet4 Question 1 
+#Gurparteek Dhream
 #Part a
 
 import matplotlib.pyplot as plt
@@ -19,7 +20,7 @@ for i in range(len(Time)):
 plt.plot(Time,Kinetic, label = 'Kinetic Energy',color='g')
 plt.plot(Time,Potential, label = 'Potential Energy', color='b')
 plt.plot(Time,Total_Energy, label ='Total Energy', color='r')
-plt.ylabel('Energy (J)')
+plt.ylabel('Energy (KJ)')
 plt.xlabel('Time (s)')
 plt.legend(bbox_to_anchor=(1,0.70))
 plt.show()
@@ -41,14 +42,14 @@ for i in range(len(Time)):
 plt.plot(Time,Kinetic, label = 'Kinetic Energy',color='g')
 plt.plot(Time,Potential, label = 'Potential Energy', color='b')
 plt.plot(Time,Total_Energy, label ='Total Energy', color='r')
-plt.ylabel('Energy (J)')
+plt.ylabel('Energy (KJ)')
 plt.xlabel('Time (s)')
 plt.legend(bbox_to_anchor=(1,0.90))
 plt.show()
 '''
-
-# Part c
 '''
+# Part c
+
 filedata= open('change_time2','r').read()
 Temp=re.findall(r"T=(\d+)",filedata)
 Kinetic=re.findall(r"[^/]<K>\s+=\s+(\D?\d+\.\d+)",filedata)
@@ -66,20 +67,40 @@ for i in range(len(Temp)):
 	Fluc_P[i]=float(Fluc_P[i])
 	Fluc_E[i]=float(Fluc_E[i])
 
-plt.plot(Temp,Kinetic, label = 'Kinetic Energy',color='r')
-plt.plot(Temp,Potential, label = 'Potential Energy', color='b')
-plt.plot(Temp,Total_Energy, label ='Total Energy', color='y')
-plt.xlabel('Temperature (K)')
-plt.ylabel(' Energy (J)')
+fig, ax1 =plt.subplots()
+ax1.plot(Temp,Kinetic, label = ' Avg. Kinetic Energy',color='r')
+plt.legend(bbox_to_anchor=(0.5,1.0))
+ax1.set_xlabel('Temperature (K)')
+ax1.set_ylabel(' Avg. Kinetic Energy (KJ)')
+ax2=ax1.twinx()
+ax2.plot(Temp,Fluc_K, label ='Fluc_K', color='m')
+ax2.set_ylabel(' Fluc_K(KJ)')
 plt.legend(bbox_to_anchor=(1.0,1.0))
 plt.show()
-plt.plot(Temp,Fluc_K, label ='Fluc_K', color='m')
+
+
+fig,ax1=plt.subplots()
+ax1.plot(Temp,Potential, label = 'Avg. Potential Energy', color='b')
+plt.legend(bbox_to_anchor=(0.5,1.0))
+ax1.set_xlabel('Temperature (K)')
+ax1.set_ylabel('Avg. Potential Energy (KJ)')
+ax2=ax1.twinx()
 plt.plot(Temp,Fluc_P, label ='Fluc_P', color='y')
-plt.plot(Temp,Fluc_E, label ='Fluc_E', color='k')
-plt.xlabel('Temperature (K)')
-plt.ylabel(' Energy (J)')
+ax2.set_ylabel('Fluc_P(KJ)')
 plt.legend(bbox_to_anchor=(1.0,1.0))
 plt.show()
+
+fig,ax1=plt.subplots()
+plt.plot(Temp,Total_Energy, label ='Avg. Total Energy', color='y')
+plt.legend(bbox_to_anchor=(0.5,1.0))
+ax1.set_xlabel('Temperature (K)')
+ax1.set_ylabel(' Avg. Total Energy(KJ)')
+ax2=ax1.twinx()
+ax2.plot(Temp,Fluc_E, label ='Fluc_E', color='k')
+ax2.set_ylabel(' Fluc_E (KJ)')
+plt.legend(bbox_to_anchor=(1.0,1.0))
+plt.show()
+
 '''
 # NE334 ProblemSet4 Question 2
 
@@ -111,7 +132,7 @@ plt.show()
 plt.plot(Time[:short_time],Kinetic[:short_time], label = 'Kinetic Energy',color='g')
 plt.plot(Time[:short_time],Potential[:short_time], label = 'Potential Energy', color='b')
 plt.plot(Time[:short_time],Total_Energy[:short_time], label ='Total Energy', color='r')
-plt.ylabel('Energy (J)')
+plt.ylabel('Energy (KJ)')
 plt.xlabel('Time (s)')
 plt.legend(bbox_to_anchor=(1,0.70))
 plt.show()
@@ -120,14 +141,14 @@ plt.show()
 
 # NE334 ProblemSet4 Question 3
 # Part C
-
+'''
 filedata = open('E_Pro','r').read()
 Total_Energy=re.findall(r"(\D?\d+\.\d+)", filedata)
 filedata = open('V_Pro','r').read()
 Potential=re.findall(r"(\D?\d+\.\d+)", filedata)
 filedata = open('K_Pro','r').read()
 Kinetic= re.findall(r"(\D?\d+\.\d+)", filedata)
-dt = 0.00025 
+dt = 0.0025 
 Time=[0]*len(Potential)
 
 for i in range(len(Potential)):
@@ -143,54 +164,50 @@ plt.plot(Time,Potential, label = 'Potential Energy', color='b')
 plt.plot(Time,Total_Energy, label ='Total Energy', color='r')
 plt.ylabel('Energy (KJ)')
 plt.xlabel('Time (s)')
-plt.legend(bbox_to_anchor=(1,1))
+plt.legend(bbox_to_anchor=(1,.87))
 plt.show()
+'''
 
-#Part Dc
 
 '''
+#Part D
+
 filedata = open('OHdistance','r').read()
 OH=re.findall(r"([\d\.\-]+)\s+([\d\.\-]+)", filedata)
 Odistance=[0]*len(OH)
 Hdistance=[0]*len(OH)
 print len(Odistance)
-dt = 0.00025
+dt = 0.0025
 Time=[0]*len(Odistance)
-
 sum_O =0
 sum_H = 0
 for i  in range(len(OH)):
 	Odistance[i]=float(OH[i][0])
 	Hdistance[i]=float(OH[i][1])
 	Time[i] = dt * i
-
 	sum_O += Odistance[i]
 	sum_H += Hdistance[i]
-
-
 #norm
 sum_O /= len(OH)
 sum_H /= len(OH)
 Avg_Hdistance=[sum_H]*len(Time)
 
-
-plt.plot(Time,Hdistance, label = 'Hdistance', color='b')
-plt.plot(Time,Odistance, label = 'Odistance',color='g')
+plt.plot(Time,Hdistance, label = 'Distance', color='b')
 plt.plot(Time,Avg_Hdistance,label='Avg_Hdistance',color='r')
-plt.ylabel('Energy (KJ)')
+plt.ylabel('Distance (nm)')
 plt.xlabel('Time (s)')
 plt.legend(bbox_to_anchor=(1,1))
-plt.xlim([0.008,0.012])
-plt.ylim([0.07,0.15])
+plt.xlim([0.0,2.5])
+plt.ylim([0.094,0.102])
 plt.show()
-'''
-'''
+
+
 filedata = open('HHdistance','r').read()
 OH=re.findall(r"([\d\.\-]+)\s+([\d\.\-]+)", filedata)
 Odistance=[0]*len(OH)
 Hdistance=[0]*len(OH)
 
-dt = 0.00025
+dt = 0.0025
 Time=[0]*len(Odistance)
 
 sum_O =0
@@ -199,24 +216,16 @@ for i  in range(len(OH)):
 	Odistance[i]=float(OH[i][0])
 	Hdistance[i]=float(OH[i][1])
 	Time[i] = dt * i
-
 	sum_O += Odistance[i]
 	sum_H += Hdistance[i]
-
-
 #norm
 sum_O /= len(OH)
 sum_H /= len(OH)
 Avg_Hdistance=[sum_H]*len(Time)
-
-
-plt.plot(Time,Hdistance, label = 'Hdistance', color='b')
-plt.plot(Time,Odistance, label = 'Odistance',color='g')
+plt.plot(Time,Hdistance, label = 'Distance', color='b')
 plt.plot(Time,Avg_Hdistance,label='Avg_Hdistance',color='r')
-plt.ylabel('Energy (KJ)')
+plt.ylabel('Distance (nm)')
 plt.xlabel('Time (s)')
 plt.legend(bbox_to_anchor=(1,1))
-#plt.xlim([0.008,0.012])
-#plt.ylim([0.07,0.15])
 plt.show()
 '''
